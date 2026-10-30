@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ytrag:
+    build: .
+    container_name: ytrag-service
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL:-llama-3.3-70b-versatile}
+      - GEMINI_EMBEDDING_MODEL=${GEMINI_EMBEDDING_MODEL:-gemini-embedding-001}
+    volumes:
+      - chroma_data:/app/data/chroma_db
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
